@@ -21,7 +21,12 @@
         android:id="@+id/fragmentSignUp"
         android:name="com.example.ex_3.fragments.FragmentSignUp"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+
+        <action
+            android:id="@+id/action_fragmentSignUp_to_fragmentRecycleView"
+            app:destination="@id/fragmentRecycleView" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentRecycleView"
         android:name="com.example.ex_3.fragments.FragmentRecycleView"

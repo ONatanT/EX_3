@@ -57,9 +57,9 @@
         android:text="Phone" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonGo"
         android:layout_width="match_parent"
         android:layout_height="63dp"
-        android:text="Button" />
+        android:text="Go" />
 
 </LinearLayout>
