@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navgraph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navgraph"
+    app:startDestination="@id/fragmentLogIn">
 
+    <fragment
+        android:id="@+id/fragmentLogIn"
+        android:name="com.example.ex_3.fragments.FragmentLogIn"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_fragmentLogIn_to_fragmentSignUp"
+            app:destination="@id/fragmentSignUp" />
+        <action
+            android:id="@+id/action_fragmentLogIn_to_fragmentRecycleView"
+            app:destination="@id/fragmentRecycleView" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentSignUp"
+        android:name="com.example.ex_3.fragments.FragmentSignUp"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+    <fragment
+        android:id="@+id/fragmentRecycleView"
+        android:name="com.example.ex_3.fragments.FragmentRecycleView"
+        android:label="fragment_recycle_view"
+        tools:layout="@layout/fragment_recycle_view" />
 </navigation>
