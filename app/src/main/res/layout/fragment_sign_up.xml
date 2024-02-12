@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.FragmentSignUp">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textViewfragmentSignupEmail"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:backgroundTint="#451D1D"
+        android:text="Please enter your email" />
+
+    <EditText
+        android:id="@+id/editTextEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:backgroundTint="#451D1D"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:text="Email" />
+
+    <TextView
+        android:id="@+id/textViewfragmentSignupPass"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:backgroundTint="#451D1D"
+        android:text="Please enter your password" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:backgroundTint="#451D1D"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="Password" />
+
+    <TextView
+        android:id="@+id/textViewfragmentSignUpPhone"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:backgroundTint="#451D1D"
+        android:text="Please enter your Phone" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="match_parent"
+        android:layout_height="97dp"
+        android:backgroundTint="#451D1D"
+        android:ems="10"
+        android:inputType="phone"
+        android:text="Phone" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:text="Button" />
+
+</LinearLayout>
