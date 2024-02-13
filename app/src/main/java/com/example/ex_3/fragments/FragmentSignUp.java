@@ -1,5 +1,6 @@
 package com.example.ex_3.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.view.MotionEvent;
 
 import com.example.ex_3.R;
 
@@ -60,6 +62,7 @@ public class FragmentSignUp extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,31 +78,37 @@ public class FragmentSignUp extends Fragment {
         });
 
         EditText textEmail = view.findViewById(R.id.editTextEmailAddress);
-        textEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                textEmail.setText("");
+        textEmail.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ((EditText)v).setText("");
+                v.performClick();
             }
+            return false;
         });
 
+
         EditText textPassword = view.findViewById(R.id.editTextTextPassword);
-        textPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                textPassword.setText("");
+        textPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ((EditText)v).setText("");
+                v.performClick();
             }
+            return false;
+
         });
 
         EditText textPhone = view.findViewById(R.id.editTextPhone);
-        textPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                textPhone.setText("");
+        textPhone.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ((EditText)v).setText("");
+                v.performClick();
             }
-        });
+            return false;
 
+        });
 
 
         return view;
     }
+
 }

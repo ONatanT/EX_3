@@ -1,11 +1,13 @@
 package com.example.ex_3.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -61,6 +63,7 @@ public class FragmentLogIn extends Fragment {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,20 +86,24 @@ public class FragmentLogIn extends Fragment {
         });
 
         EditText textEmail = view.findViewById(R.id.editTextUsername);
-        textEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                textEmail.setText("");
+        textEmail.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ((EditText)v).setText("");
+                v.performClick();
             }
+            return false;
         });
 
         EditText textPassword = view.findViewById(R.id.editTextPassword);
-        textPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                textPassword.setText("");
+        textPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ((EditText)v).setText("");
+                v.performClick();
             }
+            return false;
+
         });
+
 
         return view;
     }
