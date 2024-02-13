@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import android.widget.EditText;
 
 import com.example.ex_3.R;
@@ -78,6 +79,22 @@ public class FragmentLogIn extends Fragment {
             @Override
             public void onClick(View v){
                 Navigation.findNavController(v).navigate(R.id.action_fragmentLogIn_to_fragmentSignUp);
+            }
+        });
+
+        EditText textEmail = view.findViewById(R.id.editTextUsername);
+        textEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                textEmail.setText("");
+            }
+        });
+
+        EditText textPassword = view.findViewById(R.id.editTextPassword);
+        textPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                textPassword.setText("");
             }
         });
 
