@@ -1,5 +1,7 @@
 package com.example.ex_3.fragments;
 
+import static android.widget.Toast.*;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -8,7 +10,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.ex_3.R;
 import com.example.ex_3.activitys.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -84,6 +84,7 @@ public class FragmentLogIn extends Fragment {
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
         Button button = view.findViewById(R.id.buttonLogin);
         button.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v){
                 Navigation.findNavController(v).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
@@ -131,13 +132,17 @@ public class FragmentLogIn extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText( FragmentLogIn.this,"login success",
-                                    Toast.LENGTH_SHORT).show();
+                            makeText( FragmentLogIn.this,"login success",
+                                    LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(FragmentLogIn.this,"login failed",
-                                    Toast.LENGTH_SHORT).show();
+                            makeText(FragmentLogIn.this,"login failed",
+                                    LENGTH_SHORT).show();
                         }
+                    }
+
+                    private Toast makeText(FragmentLogIn fragmentLogIn, String loginSuccess, int lengthShort) {
+                        return null;
                     }
                 });
     }

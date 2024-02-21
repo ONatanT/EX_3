@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.example.ex_3.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -131,9 +132,15 @@ public class FragmentSignUp extends Fragment {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
+                            makeText(FragmentSignUp.this, "SignupSuccess", Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
+                            makeText(FragmentSignUp.this, "SignupFailed", Toast.LENGTH_SHORT).show();
                         }
+                    }
+
+                    private Toast makeText(FragmentSignUp fragmentSignUp, String signup, int lengthShort) {
+                        return null;
                     }
                 });
     }
