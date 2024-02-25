@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,13 +78,34 @@ public class FragmentSignUp extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("FragmentSignUp", "onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         Button button = view.findViewById(R.id.buttonGo);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
+                String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
+                String password = ((EditText) view.findViewById(R.id.editTextTextPassword) ).getText().toString().trim();
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Toast.makeText(getActivity(), "SignupSuccess", Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(view).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
+                                } if (!task.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "SignupFailed", Toast.LENGTH_SHORT).show();
+                                    Log.e("SignupError", "Error: " + task.getException().getMessage());
+                                }
+                            }
+
+
+                        });
+
+                //                Navigation.findNavController(v).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
 
             }
         });
@@ -122,27 +144,5 @@ public class FragmentSignUp extends Fragment {
         return view;
     }
 
-    public void signupFunc(View view) {
-        String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
-        String password = ((EditText) view.findViewById(R.id.editTextTextPassword) ).getText().toString().trim();
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            makeText(FragmentSignUp.this, "SignupSuccess", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            makeText(FragmentSignUp.this, "SignupFailed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    private Toast makeText(FragmentSignUp fragmentSignUp, String signup, int lengthShort) {
-                        return null;
-                    }
-                });
-    }
 
 }
