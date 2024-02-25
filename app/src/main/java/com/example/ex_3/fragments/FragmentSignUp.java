@@ -81,8 +81,8 @@ public class FragmentSignUp extends Fragment {
         Log.d("FragmentSignUp", "onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        Button button = view.findViewById(R.id.buttonGo);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonGo = view.findViewById(R.id.buttonGo);
+        buttonGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
