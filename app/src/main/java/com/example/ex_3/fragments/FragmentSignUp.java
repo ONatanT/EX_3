@@ -86,7 +86,7 @@ public class FragmentSignUp extends Fragment {
             @Override
             public void onClick(View v) {
                 signupFunc(v);
-//                Navigation.findNavController(v).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
+                //                Navigation.findNavController(v).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
 
             }
         });
