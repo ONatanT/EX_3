@@ -10,6 +10,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
 import java.util.concurrent.Executor;
 
 /**
@@ -82,17 +87,18 @@ public class FragmentLogIn extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
-        Button button = view.findViewById(R.id.buttonLogin);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonLogin = view.findViewById(R.id.buttonLogin);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v){
-                Navigation.findNavController(v).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
+                loginFunc(v);
+//                Navigation.findNavController(v).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
             }
         });
 
-        Button button2 = view.findViewById(R.id.buttonSignup);
-        button2.setOnClickListener(new View.OnClickListener() {
+        Button buttonSignup = view.findViewById(R.id.buttonSignup);
+        buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                 Navigation.findNavController(v).navigate(R.id.action_fragmentLogIn_to_fragmentSignUp);
@@ -125,25 +131,27 @@ public class FragmentLogIn extends Fragment {
     public void loginFunc(View view) {
         String email = ((EditText) view.findViewById(R.id.editTextUsername) ).getText().toString().trim();
         String password = ((EditText) view.findViewById(R.id.editTextPassword) ).getText().toString().trim();
+
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            System.out.println("In LogIn Func Success");
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            makeText( FragmentLogIn.this,"login success",
+                            Toast.makeText( getActivity(),"login success",
                                     LENGTH_SHORT).show();
+                            Navigation.findNavController(view).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
+
                         } else {
                             // If sign in fails, display a message to the user.
-                            makeText(FragmentLogIn.this,"login failed",
+                            Toast.makeText(getActivity(),"login failed",
                                     LENGTH_SHORT).show();
+                            Log.e("LoginError", "Error: " + Objects.requireNonNull(task.getException()).getMessage());
                         }
                     }
 
-                    private Toast makeText(FragmentLogIn fragmentLogIn, String loginSuccess, int lengthShort) {
-                        return null;
-                    }
                 });
     }
 
