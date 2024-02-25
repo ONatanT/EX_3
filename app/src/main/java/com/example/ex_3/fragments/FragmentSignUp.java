@@ -85,7 +85,26 @@ public class FragmentSignUp extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signupFunc(v);
+                String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
+                String password = ((EditText) view.findViewById(R.id.editTextTextPassword) ).getText().toString().trim();
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Toast.makeText(getActivity(), "SignupSuccess", Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(view).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
+                                } if (!task.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "SignupFailed", Toast.LENGTH_SHORT).show();
+                                    Log.e("SignupError", "Error: " + task.getException().getMessage());
+                                }
+                            }
+
+
+                        });
+
                 //                Navigation.findNavController(v).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
 
             }
@@ -125,26 +144,5 @@ public class FragmentSignUp extends Fragment {
         return view;
     }
 
-    public void signupFunc(View view) {
-        String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
-        String password = ((EditText) view.findViewById(R.id.editTextTextPassword) ).getText().toString().trim();
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(getActivity(), "SignupSuccess", Toast.LENGTH_SHORT).show();
-                            Navigation.findNavController(view).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
-                        } if (!task.isSuccessful()) {
-                            Toast.makeText(getActivity(), "SignupFailed", Toast.LENGTH_SHORT).show();
-                            Log.e("SignupError", "Error: " + task.getException().getMessage());
-                        }
-                    }
-
-
-                });
-    }
 
 }
