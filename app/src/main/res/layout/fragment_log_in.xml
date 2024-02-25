@@ -30,7 +30,6 @@
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="76dp"
-        android:onClick="loginFunc"
         android:text="Login" />
 
     <Button

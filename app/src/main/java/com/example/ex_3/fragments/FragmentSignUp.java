@@ -81,32 +81,11 @@ public class FragmentSignUp extends Fragment {
         Log.d("FragmentSignUp", "onCreateView");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        Button button = view.findViewById(R.id.buttonGo);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button buttonGo = view.findViewById(R.id.buttonGo);
+        buttonGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
-                String password = ((EditText) view.findViewById(R.id.editTextTextPassword) ).getText().toString().trim();
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Toast.makeText(getActivity(), "SignupSuccess", Toast.LENGTH_SHORT).show();
-                                    Navigation.findNavController(view).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
-                                } if (!task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "SignupFailed", Toast.LENGTH_SHORT).show();
-                                    Log.e("SignupError", "Error: " + task.getException().getMessage());
-                                }
-                            }
-
-
-                        });
-
-                //                Navigation.findNavController(v).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
-
+                signupFunc(view);
             }
         });
 
@@ -119,7 +98,6 @@ public class FragmentSignUp extends Fragment {
             return false;
         });
 
-
         EditText textPassword = view.findViewById(R.id.editTextTextPassword);
         textPassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -127,7 +105,6 @@ public class FragmentSignUp extends Fragment {
                 v.performClick();
             }
             return false;
-
         });
 
         EditText textPhone = view.findViewById(R.id.editTextPhone);
@@ -137,12 +114,32 @@ public class FragmentSignUp extends Fragment {
                 v.performClick();
             }
             return false;
-
         });
-
-
         return view;
     }
-
+    public void signupFunc(View view){
+        String email = ((EditText) view.findViewById(R.id.editTextEmailAddress) ).getText().toString().trim();
+        String password = ((EditText) view.findViewById(R.id.editTextTextPassword) ).getText().toString().trim();
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(getActivity(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+        }else
+        {
+            mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(getActivity(), "SignupSuccess", Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(view).navigate(R.id.action_fragmentSignUp_to_fragmentRecycleView);
+                        } else {
+                            Toast.makeText(getActivity(), "SignupFailed", Toast.LENGTH_SHORT).show();
+                            Log.e("SignupError", "Error: " + task.getException().getMessage());
+                        }
+                    }
+                });
+        }
+    }
 
 }
