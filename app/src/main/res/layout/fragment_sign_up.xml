@@ -60,7 +60,6 @@
         android:id="@+id/buttonGo"
         android:layout_width="match_parent"
         android:layout_height="63dp"
-        android:onClick="signupFunc"
         android:text="Go" />
 
 </LinearLayout>
