@@ -88,11 +88,35 @@ public class FragmentLogIn extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
         Button buttonLogin = view.findViewById(R.id.buttonLogin);
+
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v){
-                loginFunc(v);
+                String email = ((EditText) view.findViewById(R.id.editTextUsername) ).getText().toString().trim();
+                String password = ((EditText) view.findViewById(R.id.editTextPassword) ).getText().toString().trim();
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    System.out.println("In LogIn Func Success");
+                                    // Sign in success, update UI with the signed-in user's information
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Toast.makeText( getActivity(),"login success",
+                                            LENGTH_SHORT).show();
+                                    Navigation.findNavController(view).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
+
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(getActivity(),"login failed",
+                                            LENGTH_SHORT).show();
+//                            Log.e("LoginError", "Error: " + Objects.requireNonNull(task.getException()).getMessage());
+                                }
+                            }
+
+                        });
 //                Navigation.findNavController(v).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
             }
         });
@@ -128,31 +152,31 @@ public class FragmentLogIn extends Fragment {
         return view;
     }
 
-    public void loginFunc(View view) {
-        String email = ((EditText) view.findViewById(R.id.editTextUsername) ).getText().toString().trim();
-        String password = ((EditText) view.findViewById(R.id.editTextPassword) ).getText().toString().trim();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("In LogIn Func Success");
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText( getActivity(),"login success",
-                                    LENGTH_SHORT).show();
-                            Navigation.findNavController(view).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getActivity(),"login failed",
-                                    LENGTH_SHORT).show();
-                            Log.e("LoginError", "Error: " + Objects.requireNonNull(task.getException()).getMessage());
-                        }
-                    }
-
-                });
-    }
+//    public void loginFunc(View view) {
+//        String email = ((EditText) view.findViewById(R.id.editTextUsername) ).getText().toString().trim();
+//        String password = ((EditText) view.findViewById(R.id.editTextPassword) ).getText().toString().trim();
+//
+//        mAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener((Executor) this,new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            System.out.println("In LogIn Func Success");
+//                            // Sign in success, update UI with the signed-in user's information
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            Toast.makeText( getActivity(),"login success",
+//                                    LENGTH_SHORT).show();
+//                            Navigation.findNavController(view).navigate(R.id.action_fragmentLogIn_to_fragmentRecycleView);
+//
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Toast.makeText(getActivity(),"login failed",
+//                                    LENGTH_SHORT).show();
+////                            Log.e("LoginError", "Error: " + Objects.requireNonNull(task.getException()).getMessage());
+//                        }
+//                    }
+//
+//                });
+//    }
 
 }
